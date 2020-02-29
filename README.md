@@ -1,2 +1,3 @@
 # go-oracle
-When consulted, the oracle responds
+
+When consulted, the oracle responds.
