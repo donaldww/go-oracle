@@ -10,11 +10,17 @@ import (
 func ExampleProgramName() {
 	fmt.Println(ProgramName())
 	// Output:
-	// ___go_test_github_com_donaldww_go_oracle
+	// ___oracle_test_go
 }
 
 func ExampleThisIPAddr() {
 	fmt.Println(ThisIPAddr())
 	// Output:
 	// 192.168.0.11
+}
+
+func ExampleMacAddr() {
+	fmt.Println(MacAddr())
+	// Output:
+	// 78:7b:8a:af:4a:4c
 }
