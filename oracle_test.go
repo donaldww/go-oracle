@@ -5,6 +5,7 @@ package oracle
 
 import (
 	"fmt"
+	"os"
 )
 
 func ExampleProgramName() {
@@ -23,4 +24,11 @@ func ExampleMacAddr() {
 	fmt.Println(MacAddr())
 	// Output:
 	// 78:7b:8a:af:4a:4c
+}
+
+func ExampleNewViper() {
+	v := NewViper("oracle", os.Getenv("HOME")+"/.config/oracle")
+	fmt.Println(v.GetString("hello"))
+	// Output:
+	// Hello World!
 }
