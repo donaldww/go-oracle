@@ -91,10 +91,10 @@ const (
 
 // PgConnect builds a PostgreSQL connection string using
 // values found in `path`/`yamlFile`.yaml.
-func PgConnect(yamlFile, path string) (string, error) {
+func PgConnect(yamlFile, path string) string {
 	v, err := NewViper(yamlFile, path)
 	if err != nil {
-		return "", err
+		log.Fatal().Err(err).Send()
 	}
 
 	var connect strings.Builder
@@ -112,5 +112,5 @@ func PgConnect(yamlFile, path string) (string, error) {
 	addParam(dbpassword)
 	lastParam(sslmode)
 
-	return connect.String(), nil
+	return connect.String()
 }

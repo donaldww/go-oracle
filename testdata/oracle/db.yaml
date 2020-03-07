@@ -1,0 +1,6 @@
+dbpassword: orakular
+dbname: orc
+dbport: 5432
+dbhost: db.donaldww.com
+dbuser: postgres
+sslmode: disable
