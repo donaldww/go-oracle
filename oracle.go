@@ -25,6 +25,7 @@ import (
 	"net"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
@@ -65,8 +66,8 @@ func MacAddr() string {
 }
 
 // NewViper returns an instance of a spf13/viper file.
-func NewViper(cfile, cpath string) (c *viper.Viper) {
-	c = viper.New()
+func NewViper(cfile, cpath string) (*viper.Viper, error) {
+	c := viper.New()
 	c.SetConfigName(cfile)
 
 	// AddConfigPath may be called multiple times to add multiple directories.
@@ -74,7 +75,42 @@ func NewViper(cfile, cpath string) (c *viper.Viper) {
 
 	// The config file does not include the file extension.
 	if err := c.ReadInConfig(); err != nil {
-		log.Fatal().Err(err).Send()
+		return nil, err
 	}
-	return c
+	return c, nil
+}
+
+const (
+	dbuser     = "dbuser"
+	dbname     = "dbname"
+	dbport     = "dbport"
+	dbhost     = "dbhost"
+	dbpassword = "dbpassword"
+	sslmode    = "sslmode"
+)
+
+// PgConnectString builds a PostgreSQL connection string using
+// values found in `path`/`yamlFile`.yaml.
+func PgConnectString(yamlFile, path string) (string, error) {
+	v, err := NewViper(yamlFile, path)
+	if err != nil {
+		return "", err
+	}
+
+	var connect strings.Builder
+	addParam := func(item string) {
+		connect.WriteString(item + "=" + v.GetString(item) + " ")
+	}
+	lastParam := func(item string) {
+		connect.WriteString(item + "=" + v.GetString(item))
+	}
+
+	addParam(dbuser)
+	addParam(dbname)
+	addParam(dbport)
+	addParam(dbhost)
+	addParam(dbpassword)
+	lastParam(sslmode)
+
+	return connect.String(), nil
 }
