@@ -89,9 +89,9 @@ const (
 	sslmode    = "sslmode"
 )
 
-// PgConnectString builds a PostgreSQL connection string using
+// PgConnect builds a PostgreSQL connection string using
 // values found in `path`/`yamlFile`.yaml.
-func PgConnectString(yamlFile, path string) (string, error) {
+func PgConnect(yamlFile, path string) (string, error) {
 	v, err := NewViper(yamlFile, path)
 	if err != nil {
 		return "", err
