@@ -22,10 +22,12 @@ package oracle
 
 import (
 	"bytes"
-	"log"
 	"net"
 	"os"
 	"path/filepath"
+
+	"github.com/rs/zerolog/log"
+	"github.com/spf13/viper"
 )
 
 // ProgramName returns the name of the current running program.
@@ -37,7 +39,7 @@ func ProgramName() string {
 func ThisIPAddr() string {
 	conn, err := net.Dial("udp", "8.8.8.8:80")
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal().Err(err).Send()
 	}
 	defer func() {
 		_ = conn.Close()
@@ -60,4 +62,19 @@ func MacAddr() string {
 		}
 	}
 	return ""
+}
+
+// NewViper returns an instance of a spf13/viper file.
+func NewViper(cfile, cpath string) (c *viper.Viper) {
+	c = viper.New()
+	c.SetConfigName(cfile)
+
+	// AddConfigPath may be called multiple times to add multiple directories.
+	c.AddConfigPath(cpath)
+
+	// The config file does not include the file extension.
+	if err := c.ReadInConfig(); err != nil {
+		log.Fatal().Err(err).Send()
+	}
+	return c
 }
