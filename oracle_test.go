@@ -50,5 +50,5 @@ func ExamplePgConnect() {
 	c := PgConnect("db", testDataHome())
 	fmt.Println(c)
 	// Output:
-	// dbuser=postgres dbname=orc dbport=5432 dbhost=db.donaldww.com dbpassword=orakular sslmode=disable
+	// user=postgres dbname=orc port=5432 host=db.donaldww.com password=orakular sslmode=require
 }
