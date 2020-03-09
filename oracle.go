@@ -81,11 +81,11 @@ func NewViper(cfile, cpath string) (*viper.Viper, error) {
 }
 
 const (
-	dbuser     = "dbuser"
+	dbuser     = "user"
 	dbname     = "dbname"
-	dbport     = "dbport"
-	dbhost     = "dbhost"
-	dbpassword = "dbpassword"
+	dbport     = "port"
+	dbhost     = "host"
+	dbpassword = "password"
 	sslmode    = "sslmode"
 )
 
