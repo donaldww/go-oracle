@@ -81,12 +81,12 @@ func NewViper(cfile, cpath string) (*viper.Viper, error) {
 }
 
 const (
-	dbuser     = "user"
-	dbname     = "dbname"
-	dbport     = "port"
-	dbhost     = "host"
-	dbpassword = "password"
-	sslmode    = "sslmode"
+	user     = "user"
+	dbname   = "dbname"
+	port     = "port"
+	host     = "host"
+	password = "password"
+	sslmode  = "sslmode"
 )
 
 // PgConnect builds a PostgreSQL connection string using
@@ -105,11 +105,11 @@ func PgConnect(yamlFile, path string) string {
 		connect.WriteString(item + "=" + v.GetString(item))
 	}
 
-	addParam(dbuser)
+	addParam(user)
 	addParam(dbname)
-	addParam(dbport)
-	addParam(dbhost)
-	addParam(dbpassword)
+	addParam(port)
+	addParam(host)
+	addParam(password)
 	lastParam(sslmode)
 
 	return connect.String()
